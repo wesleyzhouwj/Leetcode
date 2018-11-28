@@ -1,0 +1,33 @@
+public class Solution {
+    public void connect(TreeLinkNode root) {
+        dfs(root,root);
+    }
+    private void dfs(TreeLinkNode node,TreeLinkNode parent){
+
+        if(node == null)return;
+        if(node.right != null){   //必须从右边开始，不然可能会有连不上的情况出现
+            node.right.next = findNode(node);
+            if(node.left != null){
+                node.left.next = node.right;
+            }
+        }else{
+            if(node.left != null){
+                node.left.next = findNode(node);
+            }
+        }
+        dfs(node.right,node);
+        dfs(node.left,node);
+    }
+    private TreeLinkNode findNode(TreeLinkNode node){
+        while(node.next != null){
+            if(node.next.left != null){
+                return node.next.left;
+            }else if(node.next.right != null){
+                return node.next.right;
+            }else{
+                node = node.next;
+            }
+        }
+        return null;
+    }
+}
