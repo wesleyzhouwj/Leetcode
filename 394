@@ -1,0 +1,25 @@
+class Solution {
+    private int i = 0;
+    public String decodeString(String s) {
+        StringBuilder sb = new StringBuilder();
+        int num = 0;
+        while( i < s.length()){
+            char cur = s.charAt(i);
+            if(Character.isDigit(cur)){
+                num =num* 10 + (cur -'0');
+            }else if(cur == '['){
+                i++;
+                String str = decodeString(s);
+                for(int j=0;j<num;j++){
+                    sb.append(str);
+                }
+                num = 0;
+            }else if(cur == ']'){
+                return sb.toString();
+            }else{
+                sb.append(cur);
+            }
+            i++;
+        }
+        return sb.toString();
+    }
