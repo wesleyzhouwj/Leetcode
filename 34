@@ -1,0 +1,43 @@
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        if(nums.length == 0)return new int[]{-1,-1};
+        int left = 0,right = 0;
+        int l = 0, r = nums.length-1;
+        
+        //for left
+        while(l + 1 < r){
+            int mid = l + (r-l)/2;
+            if(nums[mid] < target){
+                l = mid;
+            }else{
+                r = mid;
+            }
+        }
+        left = r;
+        
+        if(left > 0 && nums[left]!= target)left--;    //13
+        if(left > 0 && nums[left] == nums[left-1])left--;   //33
+        
+        
+        l = 0;
+        r = nums.length-1;
+        //for right
+        while(l + 1 < r){
+            int mid = l +(r-l)/2;
+            if(nums[mid] <= target){
+                l = mid;
+            }else{
+                r = mid;
+            }
+        }
+        right = l;
+        if(right < nums.length-1 && nums[right] != target)right++;  // 13
+        if(right < nums.length-1 && nums[right] == nums[right+1])right++;  //33
+        
+        if(nums[left]!=target || nums[right]!= target){
+            return new int[]{-1,-1};
+        }
+        
+        return new int[]{left, right};
+    }
+}
