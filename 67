@@ -1,0 +1,23 @@
+class Solution {
+    public String addBinary(String a, String b) {
+        int first = a.length()-1;
+        int second = b.length()-1;
+        int carry = 0;
+        StringBuilder sb = new StringBuilder();
+        
+        while(first >= 0 || second >= 0){
+            int sum = 0;
+            int curA = first >= 0 ? a.charAt(first) - '0':0;
+            int curB = second >= 0 ? b.charAt(second) - '0':0;
+            sum =curA + curB + carry;
+            carry = sum /2;
+            sum %= 2;
+            sb.append(sum);
+            first--;
+            second--;
+            
+        }
+        if(carry > 0)sb.append(carry);
+        return sb.reverse().toString();
+    }
+}
