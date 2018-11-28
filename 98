@@ -1,0 +1,11 @@
+class Solution {
+    public boolean isValidBST(TreeNode root) {
+        return inOrder(root,Long.MAX_VALUE,Long.MIN_VALUE);
+    }
+    private boolean inOrder(TreeNode node,long max,long min){
+        if(node == null)return true;
+        if(node.val <= min || node.val >= max)return false;
+        
+        return inOrder(node.left,node.val,min) && inOrder(node.right,max,node.val);
+    }
+}
