@@ -1,0 +1,15 @@
+public class Solution {
+    public void connect(TreeLinkNode root) {
+        connected(root);
+    }
+    private void connected(TreeLinkNode node){
+        if(node == null)return;
+        if(node.left ==  null && node.right == null)return;
+        if(node.left != null)node.left.next = node.right;
+        if(node.next != null){
+            node.right.next = node.next.left;
+        }
+        connected(node.left);
+        connected(node.right);
+    }
+}
