@@ -1,0 +1,27 @@
+class Solution {
+    public int minMeetingRooms(Interval[] intervals) {
+        int[] start = new int[intervals.length];
+        int[] end = new int[intervals.length];
+        int pos = 0;
+        
+        for(Interval val: intervals){
+            start[pos] = val.start;
+            end[pos] = val.end;
+            pos++;
+        }
+        Arrays.sort(start);
+        Arrays.sort(end);
+        
+        int endPos = 0;
+        int res = 0;
+        for(int i=0;i<start.length;i++){
+            if(start[i] < end[endPos]){
+                res++;
+            }else{
+                endPos++;
+            }
+            
+        }
+        return res;
+    }
+}
