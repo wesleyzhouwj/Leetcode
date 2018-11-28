@@ -1,0 +1,38 @@
+class Solution {
+  //https://leetcode.com/problems/island-perimeter/discuss/95001/clear-and-easy-java-solution
+
+    public int islandPerimeter(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        int res = 0;
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(grid[i][j] == 1){
+                    int num = check(grid,i,j,m,n,0,true);
+                    if(num == 4){
+                        res += 0;    
+                    }else if(num == 3){
+                        res += 1;
+                    }else if(num == 2){
+                        res += 2;
+                    }else if(num == 1){
+                        res += 3;
+                    }else if(num == 0){
+                        res += 4;
+                    }
+                }
+            }
+        }
+        return res;
+    }
+    private int check(int[][] grid,int i,int j, int m,int n,int count, boolean flag){
+        if(i <0 || i>= m || j < 0 || j >= n || grid[i][j] == 0)return 0;
+        if( flag == false && grid[i][j] == 1)return 1;
+        flag = false;
+        count += check(grid,i+1,j,m,n,count,flag);
+        count += check(grid,i-1,j,m,n,count,flag);
+        count += check(grid,i,j+1,m,n,count,flag);
+        count += check(grid,i,j-1,m,n,count,flag);
+        return count;
+    }
+}
