@@ -1,0 +1,26 @@
+class Solution {
+    public ListNode removeElements(ListNode head, int val) {
+        if(head == null)return head;
+        head.next = removeElements(head.next,val);
+        return head.val == val?head.next:head;
+    }
+    // public ListNode removeElements(ListNode head, int val) {
+    //     if(head == null)return head;
+    //     while(head!= null && head.val == val){
+    //         head = head.next;
+    //     }
+    //     if(head == null)return head;
+    //     ListNode dummy = head.next;
+    //     ListNode fake = head;
+    //     while(dummy != null){
+    //         if(dummy.val == val){
+    //             head.next = dummy.next;
+    //             dummy = dummy.next;
+    //         }else{
+    //             dummy = dummy.next;
+    //             head = head.next;
+    //         }
+    //     }
+    //     return fake;
+    // }
+}
