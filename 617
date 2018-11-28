@@ -1,0 +1,50 @@
+class Solution {
+    public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
+//         if(t1 == null && t2 == null)return null;
+//         if(t1 == null && t2!= null)return t2;
+//         if(t1 != null && t2 ==null)return t1;
+        
+//         t1.val += t2.val;
+        
+//         t1.left = mergeTrees(t1.left,t2.left);
+//         t1.right = mergeTrees(t1.right,t2.right);
+        
+//         return t1;
+        
+        if (t1 == null) return t2;
+        
+        Queue<TreeNode> q1 = new LinkedList<>();
+        Queue<TreeNode> q2 = new LinkedList<>();
+        
+        q1.offer(t1);
+        q2.offer(t2);
+        
+        while (!q1.isEmpty() || !q2.isEmpty()) {
+            TreeNode node1 = q1.poll();
+            TreeNode node2 = q2.poll();
+            
+            if (node1 == null || node2 == null)
+                continue;
+            
+            node1.val += node2.val;
+            
+            if (node1.left == null) {
+                node1.left = node2.left;
+            } else {
+                q1.offer(node1.left);
+                q2.offer(node2.left);
+            }
+            
+            if (node1.right == null) {
+                node1.right = node2.right;
+            } else {
+                q1.offer(node1.right);
+                q2.offer(node2.right);
+            }
+            
+             // node1.val += node2.val;
+        }
+        return t1;
+               
+    }
+}
