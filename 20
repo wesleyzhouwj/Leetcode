@@ -1,0 +1,33 @@
+class Solution {
+    public boolean isValid(String s) {
+        char[] arr = s.toCharArray();
+        Stack<Character>stack = new Stack<>();
+        for(char ele: arr){
+            if(ele == '['){
+               stack.push(ele); 
+            }else if(ele == '{'){
+                stack.push(ele);
+            }else if(ele == '('){
+                stack.push(ele);
+            }else if(ele == ')'){
+                if(stack.empty())return false;
+                char top = stack.peek();
+                if(top != '(')return false;
+                stack.pop();
+            }else if(ele == '}'){
+                if(stack.empty())return false;
+                char top = stack.peek();
+                if(top != '{')return false;
+                stack.pop();
+            }else{
+                if(stack.empty())return false;
+                char top = stack.peek();
+                if(top != '[')return false;
+                stack.pop();
+            }
+        }
+        
+        if(!stack.empty())return false;
+        return true;
+    }
+}
