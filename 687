@@ -1,0 +1,36 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    int max = 0;
+    public int longestUnivaluePath(TreeNode root) {
+        if(root == null)return 0;                         //本体使用postOrder遍历
+        search(root);
+        return max;
+    }
+    private int search(TreeNode node){
+        if(node == null)return 0;
+        int left = search(node.left);                        //可以把left看做获得了左边的边数量
+        int right = search(node.right);                      //可以把right看做获得了右边的边数量
+        if(node.left!= null && node.left.val == node.val){   //现在我们来考虑对于根节点，如果根与左边值相同，那么左边的值要多1
+            left++;
+        }else{
+            left = 0;                                         //否则为0
+        }
+        
+        if(node.right!= null && node.right.val == node.val){              //右边类似
+            right++;
+        }else{
+            right = 0;
+        }
+        
+        max = Math.max(max,left + right);                         //这时候更新max这个全局变量
+        return Math.max(left,right);                              //因为一条路只能走一边，所以不能同时返回左边或者右边的路，只能选最大的那条
+    }
+}
