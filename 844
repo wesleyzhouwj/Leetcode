@@ -1,0 +1,27 @@
+class Solution {
+    public boolean backspaceCompare(String S, String T) {
+        String SS = createNewString(S);
+        String TT = createNewString(T);
+        return SS.equals(TT);
+    }
+    private String createNewString(String str){
+        Stack<Character>stack = new Stack<>();
+        StringBuilder sb = new StringBuilder();
+        for(int i=0;i<str.length();i++){
+            char cur =str.charAt(i);
+            if(cur == '#'){
+                if(!stack.empty()){
+                    stack.pop();
+                }
+            }else{
+                stack.push(cur);
+            }
+        }
+        
+        while(!stack.empty()){
+            sb.append(stack.pop());
+        }
+        return sb.toString();
+        
+    }
+}
