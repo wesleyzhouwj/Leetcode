@@ -1,0 +1,71 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode sortList(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode mid = findMid(head);
+        ListNode right = sortList(mid.next);
+        mid.next = null;
+        ListNode left = sortList(head);
+        return merge(left,right);
+    }
+    private ListNode merge(ListNode first,ListNode second){
+        if(first == null && second == null)return null;
+        ListNode dummy = new ListNode(0);
+        ListNode fakeHead = dummy;
+        while(first != null && second != null){
+            if(first.val < second.val){
+                fakeHead.next = first;
+                first = first.next;
+                fakeHead = fakeHead.next;
+            }else {
+                fakeHead.next = second;
+                second = second.next;
+                fakeHead = fakeHead.next;
+            }
+        }
+        
+
+        if(first != null){
+            fakeHead.next = first;
+        }
+        if(second != null){
+            fakeHead.next = second;
+        }
+        
+//         while(first != null){
+//             fakeHead.next = first;
+//             first = first.next;
+//             fakeHead = fakeHead.next;
+            
+//         }
+        
+//         while(second != null){
+//             fakeHead.next = second;
+//             second = second.next;
+//             fakeHead = fakeHead.next;
+//         }
+        
+        return dummy.next;
+    }
+    private ListNode findMid(ListNode node){
+        // if(node == null)return node;
+        ListNode fast = node;
+        ListNode slow = node;
+        
+        while(fast.next!= null && fast.next.next != null){
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        
+        return slow;
+    }
+}
