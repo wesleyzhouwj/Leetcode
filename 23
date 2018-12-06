@@ -6,7 +6,7 @@
  *     ListNode(int x) { val = x; }
  * }
  */
-class Solution {
+class Solution {        //time: O(nlogk)           space: O(k)   n是list的长度，k是所有的node的数量
     public ListNode mergeKLists(ListNode[] lists) {
         if (lists == null || lists.length == 0) {
             return null;
