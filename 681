@@ -1,0 +1,42 @@
+class Solution {
+    //https://leetcode.com/problems/next-closest-time/discuss/107788/Verbose-Java-solution-DFS
+    int diff = Integer.MAX_VALUE;
+    String result = "";
+    public String nextClosestTime(String time) {
+        Set<String>set = new HashSet<>();
+        set.add(time.substring(0,1));
+        set.add(time.substring(1,2));
+        set.add(time.substring(3,4));
+        set.add(time.substring(4,5));
+        
+        if(set.size() == 1)return time;
+        
+        List<String>list = new ArrayList<>(set);
+        int minute = Integer.parseInt(time.substring(0,2)) * 60 + Integer.parseInt(time.substring(3,5));
+        dfs(0,"",list,minute);
+        
+        return result;
+    }
+    private void dfs(int pos,String cur,List<String>list,int minute){
+        if(pos == 4){
+            int firstPart = Integer.parseInt(cur.substring(0,2)) * 60;
+            int secondPart = Integer.parseInt(cur.substring(2,4));
+            int sumMinutes = firstPart + secondPart;
+            if(sumMinutes == minute)return;
+            int d = sumMinutes > minute ? sumMinutes - minute:sumMinutes + 1440 - minute;
+            if(d < diff){
+                diff = d;
+                result = cur.substring(0,2) + ":" + cur.substring(2,4);
+            }
+            return;
+        }
+        
+        for(int i=0;i<list.size();i++){
+            if(pos == 0 && Integer.parseInt(list.get(i)) > 2)continue;
+            if(pos == 1 && (Integer.parseInt(cur.substring(0)) * 10 + Integer.parseInt(list.get(i)) > 24)) continue;
+            if(pos == 2 && Integer.parseInt(list.get(i)) > 5)continue;
+            if(pos == 3 && Integer.parseInt(cur.substring(2)) * 10 + Integer.parseInt(list.get(i)) > 59)continue;
+            dfs(pos+1,cur+list.get(i),list,minute);
+        }
+    }
+}
