@@ -1,0 +1,42 @@
+class Solution {
+    // https://leetcode.com/problems/multiply-strings/discuss/17605/Easiest-JAVA-Solution-with-Graph-Explanation
+    public String multiply(String num1, String num2) {
+        int m = num1.length();
+        int n = num2.length(); 
+        int[] res = new int[m+n];
+        int pos = res.length-1;
+        // int carry =0;
+        for(int i = num2.length()-1; i>=0; i--){
+            int curPos = pos;
+            for(int j=num1.length()-1;j>=0;j--){
+                int mul = (num2.charAt(i) - '0' ) * (num1.charAt(j) - '0');
+                int sum = mul + res[curPos];
+                res[curPos-1] += sum /10;
+                res[curPos] = sum % 10;
+                curPos--;
+            }
+            pos--;
+        }
+        
+        if(res.length == 1 && res[0] == 0)return "0";
+        int p = -1;
+        StringBuilder sb = new StringBuilder();
+        for(int i=0;i<res.length;i++){
+            if(res[i] == 0)continue;
+            else{
+                p = i;
+                break;
+            }
+        }
+        if(p == -1)return "0";
+        for(int i=p;i<res.length;i++){
+            sb.append(res[i]);
+        }
+
+        // StringBuilder sb = new StringBuilder();
+        // for(int p : pos) if(!(sb.length() == 0 && p == 0)) sb.append(p);
+        // return sb.length() == 0 ? "0" : sb.toString();
+        
+        return sb.toString();
+    }
+}
