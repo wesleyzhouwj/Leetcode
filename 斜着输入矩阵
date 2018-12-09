@@ -1,0 +1,32 @@
+//给一个矩阵,斜着往上输出 int[][]{{1,2,3},{4,5,6},{7,8,9}} = >1 4 2 7 5 3 8 6 9
+
+
+public class sideling_matrix {                 //这道题是从x 到 y, x递减，y递增
+    public static void main(String[] args){
+        int[][] matrix = new int[][]{{1,2,3,4},{5,6,7,8},{9,10,11,12}};
+//        int[][] matrix = new int[][]{{1,2,3},{4,5,6},{7,8,9}};
+        int m = matrix.length;
+        int n = matrix[0].length;
+        StringBuilder sb = new StringBuilder();
+        for(int i=0;i<m;i++){                           //先输出正三角，保证x 大于等于0
+            int start = i;
+            int end = 0;
+            while(start >= 0){
+                sb.append(matrix[start][end]);
+                start--;
+                end++;
+            }
+        }
+
+        for(int j=1;j<n;j++){                             //再输出逆三角，保证y < n
+            int start = m-1;
+            int end = j;
+            while(end < n){
+                sb.append(matrix[start][end]);
+                start--;
+                end++;
+            }
+        }
+        System.out.println(sb.toString());
+    }
+}
