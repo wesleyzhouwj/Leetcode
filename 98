@@ -1,4 +1,5 @@
 class Solution {
+#############solution 1 #################
     public boolean isValidBST(TreeNode root) {
         return inOrder(root,Long.MAX_VALUE,Long.MIN_VALUE);
     }
@@ -8,4 +9,19 @@ class Solution {
         
         return inOrder(node.left,node.val,min) && inOrder(node.right,max,node.val);
     }
+    
+    
+    ###########solution 2 ##########
+     // inorder顺序，如果是二叉树排出来的将会是一个sorted的list，所以只用看后面一个是不是大于前面
+     Integer lastEle = null;
+     public boolean isValidBST(TreeNode root) {     
+         if(root == null)return true;
+         boolean left = isValidBST(root.left);
+         if(lastEle == null || root.val > lastEle){
+             lastEle = root.val;
+             boolean right = isValidBST(root.right);
+             return left && right;
+         }
+         return false;
+     }
 }
