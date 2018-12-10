@@ -1,0 +1,21 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public TreeNode invertTree(TreeNode root) {    //不要想整体，先从最基本的情况去想，然后一次类推，这就是递归的思想
+        if(root == null)return null;
+        TreeNode leftNode = root.left;
+        TreeNode rightNode = root.right;
+        root.left = rightNode;
+        root.right = leftNode;
+        invertTree(root.left);
+        invertTree(root.right);
+        return root;
+    }
+}
