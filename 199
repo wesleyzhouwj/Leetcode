@@ -1,0 +1,25 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    List<Integer>res = new ArrayList<>();
+    public List<Integer> rightSideView(TreeNode root) {
+        dfs(root,0);
+        return res;
+    }
+    private void dfs(TreeNode node,int levels){
+        if(node == null)return;
+        
+        if(levels == res.size()){                  //中序遍历，只不过先走右边再走左边，如果深度没有达到最大，就不更新，如果达到了就更新
+            res.add(node.val);
+        }
+        dfs(node.right,levels+1);
+        dfs(node.left,levels+1);
+    }
+}
