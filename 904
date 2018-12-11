@@ -1,0 +1,27 @@
+class Solution {
+    int res = Integer.MIN_VALUE;
+    public int totalFruit(int[] tree) {             //这道题是滑动窗口的思想
+        int count = 0;
+        int start = 0;
+        Map<Integer,Integer>map = new HashMap<>();
+        for(int end = 0;end<tree.length;end++){
+            int curType = tree[end];
+            if(map.get(curType) == null || map.get(curType) == 0){          //这个if用来保证水果种类，等于0表示之前出现过
+                count++;
+            }
+            map.put(curType,map.getOrDefault(curType,0)+1);               //给当前遇到的水果数量更新
+            
+            while(count > 2){                                             //当当前水果数量超过2个的时候，把start记录的水果开始减去，直到start的水果
+                map.put(tree[start],map.get(tree[start])-1);              //数量为0，这个时候水果种类count-1
+                if(map.get(tree[start]) == 0){
+                    count--;
+                }
+                start++; 
+            }
+            
+            int curLen = end - start + 1;                                //水果种类小于等于两个的时候，一直更新res
+            res = Math.max(res,curLen);
+        }
+        return res;
+    }
+}
