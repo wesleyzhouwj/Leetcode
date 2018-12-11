@@ -1,0 +1,37 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Element{
+    int min;
+    int max;
+    int size;
+    Element(int x, int y, int z){
+        min = x;
+        max = y;
+        size = z;
+    }
+    
+}
+class Solution {
+    public int largestBSTSubtree(TreeNode root) {
+        Element res = largestBST(root);
+        return res.size;
+    }
+    private Element largestBST(TreeNode node){
+        if(node == null){
+            return new Element(Integer.MAX_VALUE,Integer.MIN_VALUE,0);
+        }
+        Element left = largestBST(node.left);
+        Element right = largestBST(node.right);
+        if(node.val > left.max && node.val < right.min){
+            return new Element(Math.min(node.val,left.min), Math.max(node.val,right.max), left.size + right.size + 1);
+        }
+        return new Element(Integer.MIN_VALUE,Integer.MAX_VALUE,Math.max(left.size,right.size));
+    }
+}
