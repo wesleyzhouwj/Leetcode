@@ -1,0 +1,66 @@
+class Solution {
+    // ################### Union Find #######################
+    int count = 0;
+    Map<String,String>map = new HashMap<>();
+    public int removeStones(int[][] stones) {
+        
+        int len = stones.length;
+        count = stones.length;
+        
+        for(int[] stone: stones){
+            String s = stone[0] + " " + stone[1];         //初始化
+            map.put(s,s);
+        }
+        
+        for(int[] s1: stones){
+            String r1 = s1[0] + " " + s1[1];
+            for(int[] s2: stones){
+                if(s1[0] == s2[0] || s1[1] == s2[1]){           //如果两个marble在同一行或者同一列
+                    String r2 = s2[0] + " " + s2[1]; 
+                    union(r1,r2);
+                }
+            }
+        }
+        return len - count;
+    }
+    private String find( String str){
+        if(map.get(str).equals(str)){             //如果当前的就是根，那就返回
+            return str;
+        }
+        return find(map.get(str));                 //否则就要递归寻找这个树的boss根节点
+    }
+    
+    private void union(String s1,String s2){
+        String ss1 = find(s1);                      //寻找两个树林的根节点
+        String ss2 = find(s2);
+        if(!ss1.equals(ss2)){                     //如果两个根是不在同一个树林里，那就把他们合并，并更新根
+            map.put(ss1,ss2);
+            count--;
+            return;
+        }
+        return;                                   //如果两个树林在一个树林里，就返回
+    }
+    
+    // ########################## DFS ######################
+//     public int removeStones(int[][] stones) {
+//         int count = 0;
+//         boolean[] visited = new boolean[stones.length];
+//         for(int i=0;i<stones.length;i++){
+//             if(!visited[i]){
+//                  dfs(stones,visited,i);
+//                 count ++;
+//             }
+//         }
+//         return stones.length - count;
+//         }
+    
+//         private void dfs(int[][] stones, boolean[] visited,int i){
+//         visited[i] = true;
+//         for(int j=0;j<stones.length;j++){
+//             if(!visited[j] && (stones[i][0] == stones[j][0] || stones[i][1] == stones[j][1])){
+//                 dfs(stones,visited,j);
+//             }
+//         }
+//         return;
+//     }
+}
