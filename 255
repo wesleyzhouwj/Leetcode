@@ -1,0 +1,15 @@
+class Solution {
+    int low = Integer.MIN_VALUE;
+    public boolean verifyPreorder(int[] preorder) {            //用栈模拟前序遍历
+        Stack<Integer>stack = new Stack<>();
+        for(int ele: preorder){
+            if(ele < low)return false;
+            while(!stack.empty() && stack.peek() < ele){
+                
+                low = stack.pop();
+            }
+            stack.push(ele);
+        }
+        return true;
+    }
+}
