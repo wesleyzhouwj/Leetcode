@@ -22,7 +22,7 @@ class Solution {
             return true;
         }
         
-        boolean left = postOrder(node.left);
+        boolean left = postOrder(node.left);               //使用后序遍历，自底向上
         boolean right = postOrder(node.right);
         
         int leftVal = node.left == null ? node.val : node.left.val;
