@@ -1,31 +1,15 @@
 class Solution {
     public int reverse(int x) {
-        if(x == 0)return 0;
-        if(x >= 2147483647 || x < -2147483648)return 0;
+        long res = 0;
+        while(x != 0){
+            int remain = x % 10;
+            res = res * 10 + remain;
+            if(res > Integer.MAX_VALUE || res < Integer.MIN_VALUE){
+            return 0;
+            }
+            x /= 10;
+        }
         
-        String str = String.valueOf(x);
-        StringBuilder sb = new StringBuilder();
-        boolean flag = false;
-        int pos = str.length()-1;
-        for(int i=str.length()-1;i>=0;i--){
-            char cur = str.charAt(i);
-            if(cur != '0'){
-                pos = i;
-                break;
-            }
-        }
-        for(int i=pos;i>=0;i--){
-            char cur = str.charAt(i);
-            if(cur == '-'){
-                flag = true;
-                break;
-            }else{
-                sb.append(cur);
-            }
-        }
-        if(flag)sb.insert(0,'-');
-        long transfer= Long.parseLong(sb.toString());
-        if(transfer >=2147483647  || transfer < -2147483648)return 0;
-        return Integer.parseInt(sb.toString());
+        return (int)res;
     }
 }
