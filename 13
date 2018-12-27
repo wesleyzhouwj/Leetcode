@@ -1,0 +1,40 @@
+class Solution {
+    public int romanToInt(String s) {
+        Map<String, Integer>map = new HashMap<>();
+        map.put("I",1);
+        map.put("V",5);
+        map.put("X",10);
+        map.put("L",50);
+        map.put("C",100);
+        map.put("D",500);
+        map.put("M",1000);
+        
+//         int res = map.get(String.valueOf(s.charAt(0)));
+//         int i=1;
+//         while(i<s.length()){
+//             String a = String.valueOf(s.charAt(i));
+//             String b = i <= s.length()-2?s.substring(i,i+2):"";
+
+//             String second = map.containsKey(b)?b:a;
+//             if(map.get(second) > res){
+//                 res = map.get(second)-res ;
+//             }else{
+//                 res += map.get(second); 
+//             }
+//             if(second.length() < 2){
+//                 i++;
+//             }else{
+//                 i+=2;
+//             }
+//         }
+        int res = map.get(String.valueOf(s.charAt(s.length()-1)));  //只考虑前一个与后一个的关系
+        for (int i = 0; i < s.length() - 1; i++) {
+            if (map.get(String.valueOf(s.charAt(i))) < map.get(String.valueOf(s.charAt(i+1))))
+                res -= map.get(String.valueOf(s.charAt(i)));
+            else 
+                res += map.get(String.valueOf(s.charAt(i)));
+        }
+
+        return res;
+    }
+}
