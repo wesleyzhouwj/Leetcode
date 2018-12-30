@@ -1,0 +1,69 @@
+class Solution {
+    public List<String> letterCombinations(String digits) {
+        List<String>res = new ArrayList<>();
+        if(digits.length() == 0)return res;
+        res.add("");                           //需要有这个行，不然会输出空数列
+        Map<Character,List<String>>map = new HashMap<>();
+        List<String>cur2 = new ArrayList<>();
+        cur2.add("a");
+        cur2.add("b");
+        cur2.add("c");
+        map.put('2',cur2);
+        
+        List<String>cur3 = new ArrayList<>();
+        cur3.add("d");
+        cur3.add("e");
+        cur3.add("f");
+        map.put('3',cur3);
+        
+        List<String>cur4 = new ArrayList<>();
+        cur4.add("g");
+        cur4.add("h");
+        cur4.add("i");
+        map.put('4',cur4);
+        
+        List<String>cur5 = new ArrayList<>();
+        cur5.add("j");
+        cur5.add("k");
+        cur5.add("l");
+        map.put('5',cur5);
+        
+        List<String>cur6 = new ArrayList<>();
+        cur6.add("m");
+        cur6.add("n");
+        cur6.add("o");
+        map.put('6',cur6);
+        
+        List<String>cur7 = new ArrayList<>();
+        cur7.add("p");
+        cur7.add("q");
+        cur7.add("r");
+        cur7.add("s");
+        map.put('7',cur7);
+        
+        List<String>cur8 = new ArrayList<>();
+        cur8.add("t");
+        cur8.add("u");
+        cur8.add("v");
+        map.put('8',cur8);
+        
+        List<String>cur9 = new ArrayList<>();
+        cur9.add("w");
+        cur9.add("x");
+        cur9.add("y");
+        cur9.add("z");
+        map.put('9',cur9);
+        
+        for(int i=0;i<digits.length();i++){             //外层循环digits string
+            char cur = digits.charAt(i);
+            List<String>current = new ArrayList<>();
+            for(String val: res){                       //循环要返回的数组
+                for(String key:map.get(cur)){           //循环当前的数字代表的array
+                    current.add(val+key);
+                }
+            }
+            res = current;
+        }
+        return res;
+    }
+}
