@@ -1,0 +1,26 @@
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        if(nums.length == 0)return 0;
+        if(nums.length == 1)return 1;
+        int count = 1;
+        int pos = 1;                               //用于指示要替换的元素当前位置
+        
+        int left = 0, right = 0;
+        while(right < nums.length ){
+            if(nums[left] == nums[right]){            //如果两个指针对应的元素相同，则让right指针往右走寻找第一个不同的元素
+                right++;
+            }else{
+                if(right-left-1 >= 1){              //第一个if是对于两个指针对应数字不同，并且中间间隔至少一个元素，eg：001
+                    nums[pos++] = nums[right++];
+                    left++;
+                }else{                              //否则，两个指针对应的不同元素是挨着的，eg：12
+                    left++;
+                    right++;
+                    pos++;
+                }
+                count++;
+            }
+        }
+        return count;
+    }
+}
