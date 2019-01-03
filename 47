@@ -1,0 +1,29 @@
+class Solution {
+    List<List<Integer>>res = new ArrayList<>();
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        Arrays.sort(nums);
+        List<Integer>cur = new ArrayList<>();
+        boolean[] visited = new boolean[nums.length];
+        
+        permetuation(nums,visited,cur);
+        return res;
+    }
+    
+    private void permetuation(int[] nums,boolean[]visited,List<Integer>cur){
+        if(cur.size() == nums.length){
+            res.add(new ArrayList<>(cur));
+            return;
+        }
+        for(int i=0;i<nums.length;i++){
+            if(i>0 && nums[i]==nums[i-1] && !visited[i-1])continue;   //当前元素与前一个元素相同，并且前一个元素并没有被加入到当前的list中
+            if(!visited[i]){
+                visited[i] = true;
+                cur.add(nums[i]);
+                permetuation(nums,visited,cur);
+                cur.remove(cur.size()-1);
+                visited[i] = false;
+            }
+        }
+        return;
+    }
+}
