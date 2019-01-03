@@ -1,0 +1,26 @@
+class Solution {
+    List<List<Integer>>res = new ArrayList<>();
+    public List<List<Integer>> permute(int[] nums) {
+        List<Integer>cur = new ArrayList<>();
+        boolean[] visited = new boolean[nums.length];
+        permetuation(nums,visited,cur);
+        return res;
+    }
+        private void permetuation(int[] nums,boolean[] visited,List<Integer>cur){
+        if(cur.size() == nums.length){
+            res.add(new ArrayList<>(cur));
+            return;
+        }
+        for(int i=0;i<nums.length;i++){
+            if(!visited[i]){
+                visited[i] = true;
+                cur.add(nums[i]);
+                permetuation(nums,visited,cur);
+                
+                cur.remove(cur.size()-1);                  //去掉最后一个，因为不是作为参数传进去的
+                visited[i] = false;
+            }
+        }
+        return;
+    } 
+}
