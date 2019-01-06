@@ -1,7 +1,7 @@
 class Solution {
     public String licenseKeyFormatting(String S, int K) {
-        String str = S.replaceAll("-","");
-        str = str.toUpperCase();
+        String str = S.replaceAll("-","");            //从后往前，每次选两个，但是要考虑第一个不能满足K个的情况，最后再删除String结尾多余的一个“-”
+        str = str.toUpperCase();                      // O（N）
         int i=str.length();
         StringBuilder sb = new StringBuilder();
         while(i >= 0){
