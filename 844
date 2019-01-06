@@ -1,5 +1,87 @@
 class Solution {
-    public boolean backspaceCompare(String S, String T) {
+    public boolean backspaceCompare(String S, String T) {    //从字符串的最后一位开始走，遇到“#”号就跳过，使用一个count变量记录“#”的个数
+        int count1 = 0;
+        int count2 = 0;
+        StringBuilder sb1 = new StringBuilder();
+        StringBuilder sb2 = new StringBuilder();
+        int i=S.length()-1;
+        int j=T.length()-1;
+        while(i >= 0){
+            if(S.charAt(i) == '#'){
+                count1++;
+                i--;
+            }else{
+                if(count1 > 0){
+                    count1--;
+                    i--;
+                }else{
+                    sb1.append(S.charAt(i));
+                    i--;
+                }
+            }
+        }
+        while(j >= 0){
+            if(T.charAt(j) == '#'){
+                count2++;
+                j--;
+            }else{
+                if(count2 > 0){
+                    count2--;
+                    j--;
+                }else{
+                    sb2.append(T.charAt(j));
+                    j--;
+                }
+            }
+        }
+        
+        return sb1.toString().equals(sb2.toString());
+    }
+//     public boolean backspaceCompare(String S, String T) {          //使用单纯的stack去做，不是很推荐，时间复杂度比较高
+//         Stack<Character>stack1 = new Stack<>();
+//         Stack<Character>stack2 = new Stack<>();
+        
+//         for(char val1: S.toCharArray()){
+//             if(val1 == '#'){
+//                 if(!stack1.empty() && stack1.peek() != '#'){
+//                     stack1.pop();    
+//                 }else{
+//                     continue;
+//                 }   
+//             }else{
+//                 stack1.push(val1);
+//             }
+//         }
+        
+//         for(char val2: T.toCharArray()){
+//             if(val2 == '#'){
+//                 if(!stack2.empty() && stack2.peek() != '#'){
+//                     stack2.pop();    
+//                 }else{
+//                     continue;
+//                 }   
+//             }else{
+//                 stack2.push(val2);
+//             }
+//         }
+        
+//         StringBuilder sb1 = new StringBuilder();
+//         StringBuilder sb2 = new StringBuilder();
+//         while(!stack1.empty()){
+//             sb1.append(stack1.pop());
+//         }
+//         while(!stack2.empty()){
+//             sb2.append(stack2.pop());
+//         }
+        
+//         return sb1.toString().equals(sb2.toString());
+//     }
+}
+
+
+
+class Solution {
+    public boolean backspaceCompare(String S, String T) {    
         String SS = createNewString(S);
         String TT = createNewString(T);
         return SS.equals(TT);
