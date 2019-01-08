@@ -1,0 +1,23 @@
+class Solution {
+    public int minAreaRect(int[][] points) {         //O(N^2)
+        int res = Integer.MAX_VALUE;
+        Map<Integer,List<Integer>>map = new HashMap<>();
+        for(int[] val: points){
+            if(!map.containsKey(val[0])){
+                map.put(val[0],new ArrayList<>());
+            }
+            map.get(val[0]).add(val[1]);
+        }
+        
+        for(int[] first: points){
+            for(int[] second: points){
+                if(first[0] == second[0] || first[1]==second[1])continue;  //两个点不在同一x或者y轴上，目的是寻找对角线的两个点
+                if((map.get(first[0]).contains(second[1])) && (map.get(second[0]).contains(first[1]))){ //找到的是对角线的两个点
+                    res = Math.min(res,Math.abs(first[0]-second[0]) *Math.abs(first[1] - second[1]));
+                }
+            }
+        }
+        
+        return res == Integer.MAX_VALUE?0:res;
+    }
+}
