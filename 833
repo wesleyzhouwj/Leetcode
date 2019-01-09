@@ -1,0 +1,36 @@
+class Solution {
+    //使用两个hashmap分别存入index与sources和targets扥关系，然后sort indexes数组。
+    //然后用一个start指针记录每次经过的位置，但是需要保证start不能超过当前的index，否则不执行当前的index
+
+    public String findReplaceString(String S, int[] indexes, String[] sources, String[] targets) {
+        Map<Integer,String>map = new HashMap<>();
+        Map<Integer,String>map1 = new HashMap<>();
+        for(int i=0;i<indexes.length;i++){
+            map.put(indexes[i],sources[i]);
+        }
+        
+        for(int i=0;i<indexes.length;i++){
+            map1.put(indexes[i],targets[i]);
+        }
+        Arrays.sort(indexes);
+        
+        int start = 0;
+        String res = "";
+        for(int i=0;i<indexes.length;i++){
+            int index = indexes[i];
+            String source = map.get(index);
+            String target = map1.get(index);
+            if(start <= index){
+                if(S.substring(index,index+source.length()).equals(source)){
+                    res += S.substring(start,index);
+                    res += target;
+                    start = index + source.length();
+                } 
+            }
+        }
+        if(start <S.length()){
+            res += S.substring(start,S.length());
+        }
+        return res;
+    }
+}
