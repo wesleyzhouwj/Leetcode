@@ -1,0 +1,37 @@
+class Solution {
+    public int maxDistToClosest(int[] seats) {  //对于每个为0的点，用两个while循环寻找左右最近people距离，然后需要注意如果在最左边以及最右边的情况
+        int res = 0;
+        for(int i=0;i<seats.length;i++){
+            if(seats[i] == 0){
+                int left = i-1,right = i+1;
+                int leftCount = left < 0?-1:1,rightCount = right >= seats.length?-1:1;
+                int distance = 0;
+                while(left >= 0){
+                    if(seats[left] == 1){
+                        break;
+                    }else{
+                        left--;
+                        leftCount++;
+                    }
+                }
+                while(right <seats.length){
+                    if(seats[right] == 1){
+                        break;
+                    }else{
+                        right++;
+                        rightCount++;
+                    }
+                }
+                if(leftCount == -1){
+                    distance = rightCount;
+                }else if(rightCount == -1){
+                    distance = leftCount;
+                }else{
+                    distance = Math.min(leftCount,rightCount);   
+                }
+                res = Math.max(res,distance);
+            }
+        }
+        return res;
+    }
+}
