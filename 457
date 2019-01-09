@@ -1,0 +1,28 @@
+class Solution {
+    public boolean circularArrayLoop(int[] nums) {
+        if(nums.length == 0)return false;
+        boolean direction = nums[0]>0?true:false; //用while循环遍历，不过需要注意，每次检查方向是否一致，以及开始的坐标是往左往右的越界问题
+        int start =nums[0] > 0?nums[0] %(nums.length-1):(nums[0]+nums.length);
+        Set<Integer>set = new HashSet<>();
+        set.add(0);
+        while(true){
+            boolean currentDir = nums[start]>0?true:false;
+            if(direction != currentDir)return false;
+            direction = currentDir;
+            if(!set.contains(start)){
+                set.add(start);
+                start += nums[start];
+                if(start > 0){
+                    start = start>nums.length-1?start-nums.length:start;
+                }else{
+                    start += nums.length;
+                }
+            }else{
+                if(set.size() > 2)return true;
+                else{
+                    return false;
+                }
+            }
+        }
+    }
+}
