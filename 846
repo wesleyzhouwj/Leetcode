@@ -1,0 +1,37 @@
+class Solution {
+    public boolean isNStraightHand(int[] hand, int W) {
+        if(hand.length % W != 0)return false;
+        
+        Map<Integer,Integer>map = new HashMap<>();
+        Arrays.sort(hand);
+        for(int val: hand){
+            if(!map.containsKey(val)){
+                map.put(val,1);
+            }else{
+                map.put(val,map.get(val)+1);
+            }
+        }
+        
+        int count = 0;
+        int pos = 0;
+        while(map.keySet().size() != 0){
+            while(!map.containsKey(hand[pos])){
+                pos++;
+            }
+            int min = hand[pos];
+            map.put(min,map.get(min)-1);
+            if(map.get(min) == 0)map.remove(min);  //寻找最小的数字
+            
+            for(int i=1;i<W;i++){                 //尝试看是否能组成长度为W的顺子
+                min += 1;
+                if(map.containsKey(min)){
+                    map.put(min,map.get(min)-1);
+                    if(map.get(min) == 0)map.remove(min);
+                }else{
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}
