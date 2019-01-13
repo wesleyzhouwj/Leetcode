@@ -1,0 +1,62 @@
+/**
+ * // This is the robot's control interface.
+ * // You should not implement it, or speculate about its implementation
+ * interface Robot {
+ *     // Returns true if the cell in front is open and robot moves into the cell.
+ *     // Returns false if the cell in front is blocked and robot stays in the current cell.
+ *     public boolean move();
+ *
+ *     // Robot will stay in the same cell after calling turnLeft/turnRight.
+ *     // Each turn will be 90 degrees.
+ *     public void turnLeft();
+ *     public void turnRight();
+ *
+ *     // Clean the current cell.
+ *     public void clean();
+ * }
+ */
+class Solution {
+    public void cleanRoom(Robot robot) {
+        HashSet<String>set = new HashSet<>();
+        int cur_dir = 0;
+        dfs(cur_dir,0,0,robot,set);
+    }
+    private void dfs(int cur_dir,int i,int j,Robot robot,Set<String>set){
+        String temp = i + "->" + j;
+        if(set.contains(temp))return;
+        
+        robot.clean();
+        set.add(temp);
+        
+        for(int n=0;n<4;n++){
+            if(robot.move()){
+                int x = i, y = j;
+                switch(cur_dir){
+                    case 0:
+                        x = i-1;
+                        break;
+                    case 90:
+                        y = j+1;
+                        break;
+                    case 180:
+                        x = i+1;
+                        break;
+                    case 270:
+                        y = j-1;
+                        break;
+                    default:
+                        break;
+                }
+                dfs(cur_dir,x,y,robot,set);
+                robot.turnRight();
+                robot.turnRight();
+                robot.move();
+                robot.turnRight();
+                robot.turnRight();
+            }
+            robot.turnRight();
+            cur_dir += 90;
+            cur_dir %= 360;
+        }
+    }
+}
