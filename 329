@@ -1,0 +1,31 @@
+class Solution {
+    int res = 1;
+    public int longestIncreasingPath(int[][] matrix) {
+        if(matrix.length == 0)return 0;
+        int[][] cache = new int[matrix.length][matrix[0].length];
+        int res = 0;
+        for(int i=0;i<matrix.length;i++){
+            for(int j=0;j<matrix[0].length;j++){
+                res = Math.max(dfs(matrix,i,j,Integer.MIN_VALUE,cache),res);
+               
+            }
+        }
+        return res;
+    }
+    private int dfs(int[][] matrix,int i, int j,int previous,int[][]cache){
+        if(i < 0 || i >= matrix.length || j < 0  || j >= matrix[0].length || matrix[i][j] <= previous){
+            return 0;
+        }
+        if(cache[i][j]!=0)return cache[i][j];
+        
+        int a = dfs(matrix,i+1,j,matrix[i][j],cache)+1;
+        int b = dfs(matrix,i-1,j,matrix[i][j],cache)+1;
+        int c = dfs(matrix,i,j+1,matrix[i][j],cache)+1;
+        int d = dfs(matrix,i,j-1,matrix[i][j],cache)+1;
+        
+        int res = Math.max(a,Math.max(b,Math.max(c,d)));
+        
+        cache[i][j] = res;
+        return res;
+    }
+}
