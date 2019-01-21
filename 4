@@ -1,0 +1,28 @@
+class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int len = nums1.length + nums2.length;
+        if(len % 2 == 0){
+            return findKthNumberInTwoArray(nums1,nums2,0,0,len/2)/2 + findKthNumberInTwoArray(nums1,nums2,0,0,len/2+1)/2;  //偶数
+        }else{
+            return findKthNumberInTwoArray(nums1,nums2,0,0,len/2+1);                                  //奇数,k代表第几个数，不是坐标
+        }
+    }
+    private double findKthNumberInTwoArray(int[] nums1,int[] nums2,int p, int q,int k){
+        if(p >= nums1.length)return nums2[q + k - 1];
+        if(q >= nums2.length)return nums1[p + k - 1];
+        if(k == 1)return Math.min(nums1[p], nums2[q]);
+        
+        int m = k/2, n = k-m;
+        
+        int aVal = Integer.MAX_VALUE, bVal = Integer.MAX_VALUE;
+        if(p + m -1 < nums1.length) aVal = nums1[p + m - 1];
+        if(q + n -1 < nums2.length) bVal = nums2[q + n - 1];
+
+        
+        if(aVal < bVal){                                              //如果小于，则代表a数组里的元素，在mid左侧的都可以忽略
+            return findKthNumberInTwoArray(nums1,nums2,p+m,q,k-m);
+        }else{
+            return findKthNumberInTwoArray(nums1,nums2,p,q+n,k-n);
+        }
+    }
+}
